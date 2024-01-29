@@ -1,18 +1,52 @@
-package collections.implementations;
+package comp245lab1.ex3;
 
-import collections.CloneableLinkedList;
-import collections.LinkedList;
+import comp245lab1.CloneableLinkedList;
+import comp245lab1.LinkedList;
 import linkedlists.CircularlyLinkedList;
 
 /**
  * A circularly linked list implementation of the {@link LinkedList} interface
  * that supports cloning. This implementation extends the
  * {@link CircularlyLinkedList} class given in Lesson3Examples. It emulates the
- * behavior of the {@link LinkedList} using methods inherited from the
+ * behavior of the {@link LinkedList} using methods inherited from the original
  * {@link CircularlyLinkedList} class, such as first(), last(), addFirst(),
  * addLast(), removeFirst(), and rotate().
+ * This class supports the cloning operation by implementing the
+ * {@link CloneableLinkedList} interface.
  */
-public class CloneableCircularlyLinkedList<E> extends CircularlyLinkedList<E> implements CloneableLinkedList<E> {
+public class CloneableCircularlyLinkedList<E> extends CircularlyLinkedList<E>
+        implements LinkedList<E>, CloneableLinkedList<E> {
+
+    /**
+     * Exercise 3: Method which returns a deep copy of this linked list. By
+     * "deep copy", it means that the linked list returned by this method
+     * contains new nodes with the same element values. However, the element
+     * values are simply copied. Therefore, if the element values are mutable,
+     * the linked list returned by this method is considered to be shallow to
+     * some extent. However, if the element values are immutable, for example,
+     * String, or primitive wrapper classes, the linked list returned by this
+     * method can be considered a deep copy of this linked list.
+     *
+     * @return a deep copy of this linked list
+     */
+    @Override
+    public CloneableCircularlyLinkedList<E> clone() {
+        // Create a new empty list of this class
+        CloneableCircularlyLinkedList<E> other = new CloneableCircularlyLinkedList<>();
+
+        // By rotating this list one step at a time, each element can be
+        // accessed at the front of the list, and is added to the end of the
+        // other list.
+        for (int i = 0; i < size(); i++) {
+            other.addLast(first());
+            rotate();
+        }
+        // When the loop terminates, this list is rotated back to its original
+        // position leaving it as if nothing has happened.
+
+        // Return the other list which is a deep copy of this list.
+        return other;
+    }
 
     /**
      * Constructs an empty circularly linked list.
@@ -113,22 +147,4 @@ public class CloneableCircularlyLinkedList<E> extends CircularlyLinkedList<E> im
     public String toString() {
         return super.toString();
     }
-
-    /**
-     * This is the solution to Exercise 3.
-     */
-    @Override
-    public CloneableCircularlyLinkedList<E> clone() {
-        // create a new empty list
-        CloneableCircularlyLinkedList<E> other = new CloneableCircularlyLinkedList<>();
-        int size = size();
-        // for each element in this list, add it to the end of the other list and then
-        // rotate this list so that the next element is at the front of the list
-        for (int i = 0; i < size; i++) {
-            other.addLast(first());
-            rotate();
-        }
-        return other;
-    }
-
 }

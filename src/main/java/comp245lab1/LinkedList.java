@@ -1,4 +1,4 @@
-package collections;
+package comp245lab1;
 
 /**
  * A generic interface representing a linked list. Concrete classes should

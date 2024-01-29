@@ -1,8 +1,10 @@
-package collections;
+package comp245lab1;
 
 /**
  * A cloneable linked list implementation of the {@link LinkedList} interface
  * that supports concatenation.
+ *
+ * @param <E> the type of elements in the linked list
  */
 public interface ConcatenatableLinkedList<E> extends LinkedList<E> {
 

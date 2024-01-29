@@ -1,16 +1,83 @@
-package collections.implementations;
+package comp245lab1.ex1;
 
-import collections.CloneableLinkedList;
-import collections.ConcatenatableLinkedList;
-import collections.LinkedList;
-import collections.SwappableLinkedList;
+import comp245lab1.CloneableLinkedList;
+import comp245lab1.ConcatenatableLinkedList;
+import comp245lab1.LinkedList;
+import comp245lab1.SwappableLinkedList;
 
 /**
- * A doubly linked list implementation of the {@link LinkedList} interface.
- *
- * @param <E> the type of elements in the linked list
+ * A doubly linked list implementation of the {@link LinkedList} interface. This
+ * class supports concatenation, swapping, and cloning.
  */
-public class DoublyLinkedList<E> implements LinkedList<E>, ConcatenatableLinkedList<E>, SwappableLinkedList<E>, CloneableLinkedList<E> {
+public class DoublyLinkedList<E> implements LinkedList<E>,
+        ConcatenatableLinkedList<E>,
+        SwappableLinkedList<E>,
+        CloneableLinkedList<E> {
+
+    /**
+     * Exercise 1: Method to concatenate the specified linked list to the end of
+     * this linked list, and returns this linked list. The specified list is
+     * emptied (size is 0) as a result of this operation. The reason is that
+     * nodes of one list cannot be shared with another list; otherwise, updating
+     * one of the lists will corrupt the other list.
+     *
+     * @param list the linked list to concatenate to the end of this
+     *         linked list. This list is emptied (size is 0) as a result of this
+     *         operation.
+     * @return this linked list
+     * @throws NullPointerException if the specified list is null
+     * @throws IllegalArgumentException if the specified list is not
+     *         compatible with this list. It is usually the case when the
+     *         specified list is not an instance of the same class as this
+     *         list.
+     */
+    @Override
+    public DoublyLinkedList<E> concatenate(LinkedList<E> list) {
+        // Ensure that the specified list is not null
+        if (list == null) {
+            throw new NullPointerException();
+        }
+        // Ensure that the specified list is an instance of DoublyLinkedList
+        if (!(list instanceof DoublyLinkedList)) {
+            throw new IllegalArgumentException();
+        }
+
+        // Cast the specified list to DoublyLinkedList
+        DoublyLinkedList<E> other = (DoublyLinkedList<E>) list;
+
+        // If the specified list is empty, return this list as its return value
+        if (other.isEmpty()) {
+            return this;
+        }
+
+        // If this list is empty, set this list's head to the specified list's
+        // head.
+        if (this.head == null) {
+            this.head = other.head;
+        } else {
+            // Otherwise, concatenate the specified list to the end of this
+            // list by setting this list's tail.next to the specified list's
+            // head, and setting the specified list's head.prev to this list's
+            // tail.
+            this.tail.next = other.head;
+            other.head.prev = this.tail;
+        }
+
+        // Set this list's tail to the specified list's tail, and update the
+        // size of this list
+        this.tail = other.tail;
+        this.size += other.size;
+
+        // Set the specified list's head and tail to null, and size to 0. This
+        // is necessary because nodes of one list cannot be shared with another
+        // list; otherwise, updating one of the lists will corrupt the other.
+        other.head = null;
+        other.tail = null;
+        other.size = 0;
+
+        // Return this list as its return value
+        return this;
+    }
 
     /**
      * A node in a doubly linked list. It has package visibility for testing
@@ -193,7 +260,7 @@ public class DoublyLinkedList<E> implements LinkedList<E>, ConcatenatableLinkedL
 
     @Override
     public E remove(int index) {
-       checkIndex(index);
+        checkIndex(index);
         if (index == 0) {
             return removeFirst();
         } else if (index == size - 1) {
@@ -206,35 +273,6 @@ public class DoublyLinkedList<E> implements LinkedList<E>, ConcatenatableLinkedL
             this.size--;
             return element;
         }
-    }
-
-    /**
-     * This is solution to Exercise 1
-     */
-    @Override
-    public DoublyLinkedList<E> concatenate(LinkedList<E> list) {
-        if (list == null) {
-            throw new NullPointerException();
-        }
-        if (!(list instanceof DoublyLinkedList)) {
-            throw new IllegalArgumentException();
-        }
-        DoublyLinkedList<E> other = (DoublyLinkedList<E>) list;
-        if (other.isEmpty()) {
-            return this;
-        }
-        if (this.head == null) {
-            this.head = other.head;
-        } else {
-            this.tail.next = other.head;
-            other.head.prev = this.tail;
-        }
-        this.tail = other.tail;
-        this.size += other.size;
-        other.head = null;
-        other.tail = null;
-        other.size = 0;
-        return this;
     }
 
     @Override
@@ -285,4 +323,5 @@ public class DoublyLinkedList<E> implements LinkedList<E>, ConcatenatableLinkedL
     public String toString() {
         return LinkedList.toString(this);
     }
+
 }

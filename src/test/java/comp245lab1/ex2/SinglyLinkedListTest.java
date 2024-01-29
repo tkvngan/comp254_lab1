@@ -1,9 +1,10 @@
-package collections.implementations;
+package comp245lab1.ex2;
 
-import collections.*;
+import comp245lab1.*;
+import comp245lab1.ex2.SinglyLinkedList;
 import org.junit.jupiter.api.BeforeEach;
 
-import static collections.LinkedListTest.assertListEmpty;
+import static comp245lab1.LinkedListTest.assertListEmpty;
 
 /**
  * All unit tests for LinkedList with {@link SinglyLinkedList} as
@@ -15,15 +16,8 @@ public class SinglyLinkedListTest implements
         SwappableLinkedListTest,
         CloneableLinkedListTest {
 
-    private SinglyLinkedList<String> linkedList;
-
     @Override
-    public SinglyLinkedList<String> linkedList() {
-        return linkedList;
-    }
-
-    @Override
-    public <E> SinglyLinkedList<E> createLinkedList() {
+    public SinglyLinkedList<String> createLinkedList() {
         return new SinglyLinkedList<>();
     }
 
@@ -32,9 +26,4 @@ public class SinglyLinkedListTest implements
         return ((SinglyLinkedList<E>) linkedList).getNode(index);
     }
 
-    @BeforeEach
-    void setUp() {
-        linkedList = createLinkedList();
-        assertListEmpty(linkedList);
-    }
 }

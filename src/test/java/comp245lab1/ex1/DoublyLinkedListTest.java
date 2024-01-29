@@ -1,9 +1,10 @@
-package collections.implementations;
+package comp245lab1.ex1;
 
-import collections.*;
+import comp245lab1.*;
+import comp245lab1.ex1.DoublyLinkedList;
 import org.junit.jupiter.api.BeforeEach;
 
-import static collections.LinkedListTest.assertListEmpty;
+import static comp245lab1.LinkedListTest.assertListEmpty;
 
 /**
  * All unit test for LinkedList with {@link DoublyLinkedList} as
@@ -15,26 +16,13 @@ public class DoublyLinkedListTest implements
         SwappableLinkedListTest,
         CloneableLinkedListTest {
 
-    private DoublyLinkedList<String> linkedList;
-
     @Override
-    public <E> DoublyLinkedList<E> createLinkedList() {
+    public DoublyLinkedList<String> createLinkedList() {
         return new DoublyLinkedList<>();
     }
 
     @Override
     public <E> Object getNode(LinkedList<E> linkedList, int index) {
         return ((DoublyLinkedList<E>) linkedList).getNode(index);
-    }
-
-    @Override
-    public DoublyLinkedList<String> linkedList() {
-        return linkedList;
-    }
-
-    @BeforeEach
-    void setUp() {
-        linkedList = createLinkedList();
-        assertListEmpty(linkedList);
     }
 }

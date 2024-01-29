@@ -57,6 +57,19 @@ class located in the comp245lab1 package
 under the src/test/java folder.
 
 
+## Build and Packaging
+The application is built using Maven. The following command can be used to
+build the application:
+
+```./mvnw clean package```
+
+To run the unit tests, use the following command:
+
+```./mvnw clean test```
+
+```./mvnw surefire-report:report```
+
+
 ## Unit Test Results
 The unit tests report can be found in the target/site/surefire-reports.html file.
 
